@@ -11,12 +11,20 @@ export type StudioSpinnerProps = {
   variant?: SpinnerProps['variant'];
 } & HTMLAttributes<HTMLDivElement>;
 
+type ParagraphSize = Exclude<SpinnerProps['size'], '2xs' | 'xxsmall' | 'l' | 'xl' | 'xlarge'>;
+
 export const StudioSpinner = forwardRef<HTMLDivElement, StudioSpinnerProps>(
   (
     { spinnerTitle, showSpinnerTitle = false, size = 'medium', variant = 'interaction', ...rest },
     ref,
   ): JSX.Element => {
     const spinnerDescriptionId = useId();
+    const paragraphSize: ParagraphSize =
+      size === '2xs' || size === 'xxsmall'
+        ? 'xs'
+        : size === 'xl' || size === 'lg' || size === 'xlarge'
+          ? 'md'
+          : size;
 
     return (
       <div className={classes.spinnerWrapper} ref={ref} {...rest}>
@@ -27,7 +35,11 @@ export const StudioSpinner = forwardRef<HTMLDivElement, StudioSpinnerProps>(
           aria-describedby={showSpinnerTitle ? spinnerDescriptionId : null}
           data-testid='studio-spinner-test-id'
         />
-        {showSpinnerTitle && <Paragraph id={spinnerDescriptionId}>{spinnerTitle}</Paragraph>}
+        {showSpinnerTitle && (
+          <Paragraph size={paragraphSize} id={spinnerDescriptionId}>
+            {spinnerTitle}
+          </Paragraph>
+        )}
       </div>
     );
   },

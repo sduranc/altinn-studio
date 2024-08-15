@@ -13,18 +13,22 @@ export type StudioSpinnerProps = {
 
 type ParagraphSize = Exclude<SpinnerProps['size'], '2xs' | 'xxsmall' | 'l' | 'xl' | 'xlarge'>;
 
+const convertSpinnerSizeToFittingParagraphSize = (
+  spinnerSize: SpinnerProps['size'],
+): ParagraphSize => {
+  const spinnerSizeIsSmaller = spinnerSize === '2xs' || spinnerSize === 'xxsmall';
+  const spinnerSizeIsBigger =
+    spinnerSize === 'xl' || spinnerSize === 'lg' || spinnerSize === 'xlarge';
+  return spinnerSizeIsSmaller ? 'xs' : spinnerSizeIsBigger ? 'md' : spinnerSize;
+};
+
 export const StudioSpinner = forwardRef<HTMLDivElement, StudioSpinnerProps>(
   (
     { spinnerTitle, showSpinnerTitle = false, size = 'medium', variant = 'interaction', ...rest },
     ref,
   ): JSX.Element => {
     const spinnerDescriptionId = useId();
-    const paragraphSize: ParagraphSize =
-      size === '2xs' || size === 'xxsmall'
-        ? 'xs'
-        : size === 'xl' || size === 'lg' || size === 'xlarge'
-          ? 'md'
-          : size;
+    const paragraphSize: ParagraphSize = convertSpinnerSizeToFittingParagraphSize(size);
 
     return (
       <div className={classes.spinnerWrapper} ref={ref} {...rest}>

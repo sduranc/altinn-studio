@@ -5,7 +5,6 @@ import classes from './ImportImage.module.css';
 import { useAddImageMutation } from 'app-shared/hooks/mutations/useAddImageMutation';
 import { useStudioEnvironmentParams } from 'app-shared/hooks/useStudioEnvironmentParams';
 import { AddImageFromLibraryModal } from './AddImageFromLibrary/AddImageFromLibraryModal';
-import { shouldDisplayFeature } from 'app-shared/utils/featureToggleUtils';
 import { UploadImage } from './UploadImage/UploadImage';
 import { useTranslation } from 'react-i18next';
 import { OverrideExistingImageModal } from './OverrideExistingImageModal/OverrideExistingImageModal';
@@ -54,11 +53,9 @@ export const ImportImage = ({ onImageChange }: ImportImageProps) => {
 
   return (
     <div className={classes.importImage}>
-      {shouldDisplayFeature('useImageLibrary') && (
-        <StudioButton size='small' onClick={() => setShowChooseFromLibraryModalOpen(true)}>
-          {t('ux_editor.properties_panel.images.choose_from_library')}
-        </StudioButton>
-      )}
+      <StudioButton size='small' onClick={() => setShowChooseFromLibraryModalOpen(true)}>
+        {t('ux_editor.properties_panel.images.choose_from_library')}
+      </StudioButton>
       {showChooseFromLibraryModalOpen && (
         <AddImageFromLibraryModal
           isOpen={showChooseFromLibraryModalOpen}

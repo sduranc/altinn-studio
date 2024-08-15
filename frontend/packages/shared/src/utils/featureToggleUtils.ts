@@ -8,8 +8,7 @@ export type SupportedFeatureFlags =
   | 'componentConfigBeta'
   | 'shouldOverrideAppLibCheck'
   | 'resourceMigration'
-  | 'multipleDataModelsPerTask'
-  | 'useImageLibrary'; // is `use-` prefix allowed to use for other things than hooks?
+  | 'multipleDataModelsPerTask';
 
 /*
  * Please add all the features that you want to be toggle on by default here.
